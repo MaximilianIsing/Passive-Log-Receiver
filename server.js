@@ -95,6 +95,84 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// College Scorecard API endpoint
+const COLLEGE_SCORECARD_API_KEY = process.env.COLLEGE_SCORECARD_API_KEY || '';
+
+app.get('/api/colleges', async (req, res) => {
+  try {
+    const { search, page = 1, per_page = 20 } = req.query;
+    
+    if (!COLLEGE_SCORECARD_API_KEY) {
+      // Return mock data if API key not configured
+      return res.json({
+        results: [],
+        page: 1,
+        per_page: 20,
+        total: 0,
+        note: 'College Scorecard API key not configured. Using mock data.'
+      });
+    }
+
+    let url = `https://api.data.gov/ed/collegescorecard/v1/schools.json?api_key=${COLLEGE_SCORECARD_API_KEY}&page=${page}&per_page=${per_page}&fields=id,school.name,school.city,school.state,school.ownership,latest.admissions.admission_rate.overall,latest.cost.tuition.in_state,latest.cost.tuition.out_of_state,latest.school.size,latest.admissions.sat_scores.average.overall,latest.admissions.act_scores.midpoint.cumulative,latest.school.locale`;
+    
+    if (search) {
+      url += `&school.name=${encodeURIComponent(search)}`;
+    }
+
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+      throw new Error(`College Scorecard API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    
+    // Transform data to match your format
+    const transformed = data.results.map(school => ({
+      id: school.id,
+      name: school['school.name'] || 'Unknown',
+      location: `${school['school.city'] || ''}, ${school['school.state'] || ''}`.trim(),
+      state: school['school.state'] || '',
+      city: school['school.city'] || '',
+      size: getSizeCategory(school['latest.school.size']),
+      type: getTypeFromOwnership(school['school.ownership']),
+      acceptanceRate: school['latest.admissions.admission_rate.overall'] || null,
+      tuitionInState: school['latest.cost.tuition.in_state'] || null,
+      tuitionOutState: school['latest.cost.tuition.out_of_state'] || null,
+      satAverage: school['latest.admissions.sat_scores.average.overall'] || null,
+      actMidpoint: school['latest.admissions.act_scores.midpoint.cumulative'] || null,
+      locale: school['latest.school.locale'] || null
+    }));
+
+    res.json({
+      results: transformed,
+      page: parseInt(page),
+      per_page: parseInt(per_page),
+      total: data.metadata?.total || transformed.length
+    });
+  } catch (error) {
+    console.error('College Scorecard API error:', error);
+    res.status(500).json({ error: 'Failed to fetch college data' });
+  }
+});
+
+// Helper functions
+function getSizeCategory(enrollment) {
+  if (!enrollment) return 'Unknown';
+  if (enrollment < 5000) return 'Small';
+  if (enrollment < 15000) return 'Medium';
+  return 'Large';
+}
+
+function getTypeFromOwnership(ownership) {
+  const types = {
+    1: 'Public',
+    2: 'Private',
+    3: 'Private For-Profit'
+  };
+  return types[ownership] || 'Unknown';
+}
+
 // Health check endpoint for Render
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
@@ -103,9 +181,15 @@ app.get('/health', (req, res) => {
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Path Pal server running on port ${PORT}`);
   if (GPT_API_KEY) {
-    console.log('GPT API key configured');
+    console.log('✓ GPT API key configured');
   } else {
-    console.warn('Warning: GPT API key not configured. AI features will not work.');
+    console.warn('⚠ Warning: GPT API key not configured. AI features will not work.');
+  }
+  if (COLLEGE_SCORECARD_API_KEY) {
+    console.log('✓ College Scorecard API key configured');
+  } else {
+    console.warn('⚠ Warning: College Scorecard API key not configured. Real college data not available.');
+    console.warn('  Get your free API key at: https://api.data.gov/signup/');
   }
 });
 

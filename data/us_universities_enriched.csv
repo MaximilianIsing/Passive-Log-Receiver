@@ -1,0 +1,23 @@
+name,url,city,state,type,size_category,acceptance_rate,sat_50th_percentile,act_50th_percentile,tuition_in_state,tuition_out_state,graduation_rate,enrollment,region,popular_majors,median_earnings_10_years,campus_setting,ipeds_id
+Abilene Christian University,http://www.acu.edu/,Abilene,TX,Private,Medium,0.61,1130,24,36450,36450,0.58,5245,Southwest,"Business Administration, Nursing, Psychology",47800,Suburban,222178
+Academy of Art College,http://www.academyart.edu/,San Francisco,CA,Private,Medium,,,,,,,,West,,,Urban,
+Adams State College,http://www.adams.edu/,Alamosa,CO,Public,Small,0.99,960,19,9384,18480,0.28,1673,West,"Business Administration, Nursing, Biology",33700,Rural,126182
+Adelphi University,http://www.adelphi.edu/,Garden City,NY,Private,Medium,0.74,1160,24,41750,,0.66,8016,Northeast,"Psychology, Nursing, Biology",52800,Suburban,188429
+Adler School of Professional Psychology,http://www.adler.edu/,Chicago,IL,Private,Small,,,,,,,,Midwest,,,Urban,
+Adrian College,http://www.adrian.edu/,Adrian,MI,Private,Small,0.61,1070,22,37800,37800,0.55,1659,Midwest,"Business Administration, Biology, Psychology",39000,Urban,168148
+Agnes Scott College,http://www.scottlan.edu/,Decatur,GA,Private,Small,0.7,1280,28,42460,42460,0.71,1001,Southeast,"Biology, Psychology, Business Administration",48500,Suburban,138947
+Air Force Institute of Technology,http://www.afit.af.mil/,Wright-Patterson AFB,OH,Public,Small,,,,,,,,Midwest,,,,
+Alabama Agricultural and Mechanical University,http://www.aamu.edu/,Huntsville,AL,Public,Medium,0.0,870,17,11036,19356,0.35,6090,Southeast,"Business Administration, Criminal Justice, Nursing",36200,Urban,100654
+Alabama State University,http://www.alasu.edu/,Montgomery,AL,Public,Medium,0.97,910,17,11036,19396,0.38,4706,Southeast,"Business, Criminal Justice, Biology",31100,Urban,100654
+Alaska Bible College,http://www.akbible.edu/,Palmer,AK,Private,Small,,,,13400,13400,,45,West,,,Rural,
+Alaska Pacific University,http://www.alaskapacific.edu/,Anchorage,AK,Private,Small,,,,,,,,West,,,Urban,
+Albany College of Pharmacy,http://www.acp.edu/,Albany,NY,Private,Small,,,,,,,,Northeast,,,,
+Albany Law School,http://www.albanylaw.edu/,Albany,NY,Private,Small,,,,,,,,Northeast,,,,
+Albany Medical Center,http://www.amc.edu/,Albany,NY,Private,Small,,,,,,,,Northeast,,,,
+Albany State University,http://www.asurams.edu/,Albany,GA,Public,Medium,0.0,830,17,6066,16696,0.33,6172,Southeast,"Business Administration, Nursing, Criminal Justice",30000,City,138716
+Albertus Magnus College,http://www.albertus.edu/,New Haven,CT,Private,Small,0.61,980,20,36400,36400,0.41,1367,Northeast,"Business Administration, Criminal Justice, Psychology",43800,Urban,129401
+Albion College,http://www.albion.edu/,Albion,MI,Private,Small,0.68,1160,24,49750,49750,0.64,1557,Midwest,"Economics, Psychology, Biology",42100,Suburban,168148
+Albright College,http://www.albright.edu/,Reading,PA,Private,Small,0.62,1080,22,,44550,0.61,1869,Northeast,"Business Administration, Psychology, Biology",46400,Suburban,211440
+Alcorn State University,http://www.alcorn.edu/,Lorman,MS,Public,Medium,0.52,870,17,7768,17608,0.38,3463,Southeast,"Business Administration, Biology, Criminal Justice",30500,Rural,175342
+Alderson Broaddus College,http://www.ab.edu/,Philippi,WV,Private,Small,0.56,970,20,30350,30350,0.39,1056,Southeast,"Nursing, Biology, Business Administration",40000,Rural,237509
+Alfred Adler Graduate School,http://www.alfredadler.edu/,Chicago,IL,Private,Small,,,,,,,,Midwest,,,,
