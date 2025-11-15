@@ -11,7 +11,7 @@
 </head>
 <body>
   <div class="desktop-message">
-    <h1>📱 Mobile App Required</h1>
+    <h1><img src="/media/icons/Mobile256x256.png" alt="Mobile" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 0.5rem;"> Mobile App Required</h1>
     <p>Path Pal is designed for mobile devices. Please open this site on your mobile phone or tablet.</p>
   </div>
 
@@ -21,7 +21,7 @@
         <img src="/media/logo/logo64x64.png" alt="Path Pal Logo">
         <h1>Path Pal</h1>
       </div>
-      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+      <button class="menu-toggle" aria-label="Toggle menu"><img src="/media/icons/Hamburger128x128.png" alt="Menu" style="width: 24px; height: 24px;"></button>
     </div>
   </header>
 
@@ -154,7 +154,7 @@
           <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
             <div style="flex: 1;">
               <h4 style="color: var(--primary-green); margin-bottom: 0.5rem;">${college.name}</h4>
-              <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 0.25rem;">📍 ${college.location}</p>
+              <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 0.25rem;"><img src="/media/icons/Location128x128.png" alt="Location" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 0.25rem;"> ${college.location}</p>
               <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 0.25rem;">${college.type} • ${college.size}</p>
               <p style="color: var(--text-light); font-size: 0.9rem;">Acceptance Rate: ${(college.acceptanceRate * 100).toFixed(1)}%</p>
             </div>
@@ -166,7 +166,7 @@
           </div>
           <div style="display: flex; gap: 0.5rem;">
             <button class="btn btn-primary" onclick="saveCollege(${college.id})" style="flex: 1; ${isSaved ? 'background: var(--success);' : ''}">
-              ${isSaved ? '✓ Saved' : '⭐ Save'}
+              ${isSaved ? '<img src="/media/icons/Check256x256.png" alt="Check" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 0.25rem;"> Saved' : '<img src="/media/icons/Star128x128.png" alt="Star" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 0.25rem;"> Save'}
             </button>
             <button class="btn btn-secondary" onclick="viewCollegeDetails(${college.id})" style="flex: 1;">
               View Details
@@ -219,7 +219,15 @@
 
     function saveCollege(collegeId) {
       const college = allColleges.find(c => c.id === collegeId);
-      if (college) {
+      if (!college) return;
+      
+      const isSaved = SavedColleges.isSaved(collegeId);
+      
+      if (isSaved) {
+        SavedColleges.remove(collegeId);
+        displayColleges(filteredColleges);
+        showNotification(`${college.name} removed from saved`, 'info');
+      } else {
         SavedColleges.add(college);
         displayColleges(filteredColleges);
         showNotification(`${college.name} saved!`, 'success');

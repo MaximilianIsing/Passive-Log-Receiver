@@ -11,7 +11,7 @@
 </head>
 <body>
   <div class="desktop-message">
-    <h1>📱 Mobile App Required</h1>
+    <h1><img src="/media/icons/Mobile256x256.png" alt="Mobile" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 0.5rem;"> Mobile App Required</h1>
     <p>Path Pal is designed for mobile devices. Please open this site on your mobile phone or tablet.</p>
   </div>
 
@@ -21,7 +21,7 @@
         <img src="/media/logo/logo64x64.png" alt="Path Pal Logo">
         <h1>Path Pal</h1>
       </div>
-      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+      <button class="menu-toggle" aria-label="Toggle menu"><img src="/media/icons/Hamburger128x128.png" alt="Menu" style="width: 24px; height: 24px;"></button>
     </div>
   </header>
 
@@ -183,10 +183,10 @@
           </div>
           <div style="display: flex; gap: 0.5rem;">
             <button class="btn btn-primary" onclick="saveActivity(${activity.id})" style="flex: 1; ${isSaved ? 'background: var(--success);' : ''}">
-              ${isSaved ? '✓ Saved' : '⭐ Save'}
+              ${isSaved ? '<img src="/media/icons/Check256x256.png" alt="Check" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 0.25rem;"> Saved' : '<img src="/media/icons/Star128x128.png" alt="Star" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 0.25rem;"> Save'}
             </button>
             <button class="btn btn-secondary" onclick="addToPlanner(${activity.id})" style="flex: 1;">
-              📅 Add to Planner
+              <img src="/media/icons/Calender256x256.png" alt="Calendar" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 0.25rem;"> Add to Planner
             </button>
           </div>
         `;
