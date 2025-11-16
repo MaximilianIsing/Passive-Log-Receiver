@@ -108,6 +108,7 @@ const UserProfile = {
         act: '',
         psat: '',
         majors: [],
+        apCourses: [],
         activities: '',
         interests: [],
         careerGoals: ''

@@ -18,8 +18,10 @@
   <header>
     <div class="header-content container">
       <div class="logo">
-        <img src="/media/logo/logo64x64.png" alt="Path Pal Logo">
-        <h1>Path Pal</h1>
+        <a href="/index.html" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: inherit;">
+          <img src="/media/logo/logo64x64.png" alt="Path Pal Logo">
+          <h1>Path Pal</h1>
+        </a>
       </div>
       <button class="menu-toggle" aria-label="Toggle menu"><img src="/media/icons/Hamburger128x128.png" alt="Menu" style="width: 24px; height: 24px;"></button>
     </div>
@@ -27,16 +29,16 @@
 
   <nav>
     <ul>
-      <li><a href="/index.html">Home</a></li>
-      <li><a href="/profile.html" class="active">My Profile</a></li>
-      <li><a href="/odds.html">Admissions Odds</a></li>
-      <li><a href="/simulator.html">"What If" Simulator</a></li>
-      <li><a href="/explorer.html">College Explorer</a></li>
-      <li><a href="/career.html">Career & Salary Paths</a></li>
-      <li><a href="/activities.html">Activity & Internship Recs</a></li>
-      <li><a href="/planner.html">4-Year Planner</a></li>
-      <li><a href="/messages.html">Messages</a></li>
-      <li><a href="/saved.html">Saved Colleges</a></li>
+      <li><a href="/index.html"><img src="/media/icons/Home256x256.png" alt="Home" class="nav-icon"> Home</a></li>
+      <li><a href="/profile.html" class="active"><img src="/media/icons/Profile256x256.png" alt="Profile" class="nav-icon"> My Profile</a></li>
+      <li><a href="/odds.html"><img src="/media/icons/Odds256x256.png" alt="Admissions Odds" class="nav-icon"> Admissions Odds</a></li>
+      <li><a href="/simulator.html"><img src="/media/icons/Book256x256.png" alt="What If" class="nav-icon"> "What If" Simulator</a></li>
+      <li><a href="/explorer.html"><img src="/media/icons/Search256x256.png" alt="College Explorer" class="nav-icon"> College Explorer</a></li>
+      <li><a href="/career.html"><img src="/media/icons/DollarSign256x256.png" alt="Career & Salary Paths" class="nav-icon"> Career & Salary Paths</a></li>
+      <li><a href="/activities.html"><img src="/media/icons/Activity256x256.png" alt="Activities" class="nav-icon"> Activity & Internship Recs</a></li>
+      <li><a href="/planner.html"><img src="/media/icons/Calender256x256.png" alt="4-Year Planner" class="nav-icon"> 4-Year Planner</a></li>
+      <li><a href="/messages.html"><img src="/media/icons/Chat256x256.png" alt="AI Counselor" class="nav-icon"> AI Counselor</a></li>
+      <li><a href="/saved.html"><img src="/media/icons/Star256x256.png" alt="Saved Colleges" class="nav-icon"> Saved Colleges</a></li>
     </ul>
   </nav>
 
@@ -46,7 +48,6 @@
 
       <!-- Profile Overview -->
       <div class="card">
-        <h3>Broad Overview</h3>
         <div class="profile-header" style="text-align: center; margin-bottom: 1.5rem;">
           <div style="width: 100px; height: 100px; background: var(--light-mint); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center;">
             <img src="/media/icons/Profile256x256.png" alt="Profile" style="width: 64px; height: 64px;">
@@ -56,7 +57,7 @@
 
         <div class="form-group">
           <label>Name</label>
-          <input type="text" id="name" placeholder="Enter your name">
+          <input type="text" id="name" placeholder="Enter your name" maxlength="40">
         </div>
 
         <div class="form-group">
@@ -67,10 +68,6 @@
             <option value="10th">10th Grade</option>
             <option value="11th">11th Grade</option>
             <option value="12th">12th Grade</option>
-            <option value="college-freshman">College Freshman</option>
-            <option value="college-sophomore">College Sophomore</option>
-            <option value="college-junior">College Junior</option>
-            <option value="college-senior">College Senior</option>
           </select>
         </div>
       </div>
@@ -80,7 +77,12 @@
         <h3>Academic Information</h3>
         
         <div class="form-group">
-          <label>GPA</label>
+          <label>
+            GPA
+            <span style="font-weight: normal; font-size: 0.8rem; color: var(--text-light); margin-left: 0.25rem;">
+              (approximate if unknown)
+            </span>
+          </label>
           <input type="number" id="gpa" step="0.01" min="0" max="5" placeholder="e.g., 3.75">
         </div>
 
@@ -91,20 +93,108 @@
           </label>
         </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label>SAT Score</label>
-            <input type="number" id="sat" min="400" max="1600" placeholder="e.g., 1450">
+        <div class="form-group">
+          <label>Test Type</label>
+          <select id="test-type">
+            <option value="">Select test</option>
+            <option value="UNTAKEN">Untaken</option>
+            <option value="SAT">SAT</option>
+            <option value="ACT">ACT</option>
+            <option value="PSAT">PSAT</option>
+          </select>
+        </div>
+
+        <!-- SAT fields -->
+        <div id="sat-fields" class="test-section" style="display: none;">
+          <div class="form-row">
+            <div class="form-group">
+              <label>SAT English</label>
+              <input type="number" id="sat-reading" min="200" max="800" placeholder="e.g., 720">
+            </div>
+            <div class="form-group">
+              <label>SAT Math</label>
+              <input type="number" id="sat-math" min="200" max="800" placeholder="e.g., 740">
+            </div>
           </div>
           <div class="form-group">
-            <label>ACT Score</label>
-            <input type="number" id="act" min="1" max="36" placeholder="e.g., 32">
+            <small>
+              SAT Score (400-1600): <span id="sat-total"><strong>—</strong></span><br>
+              <span style="color: var(--text-light);">Note: Path Pal treats this as a superscore using your best section scores.</span>
+            </small>
           </div>
         </div>
 
+        <!-- PSAT fields -->
+        <div id="psat-fields" class="test-section" style="display: none;">
+        <div class="form-row">
+          <div class="form-group">
+              <label>PSAT English</label>
+              <input type="number" id="psat-reading" min="160" max="760" placeholder="e.g., 690">
+            </div>
+            <div class="form-group">
+              <label>PSAT Math</label>
+              <input type="number" id="psat-math" min="160" max="760" placeholder="e.g., 700">
+            </div>
+          </div>
+          <div class="form-group">
+            <small>
+              PSAT Score (320-1520): <span id="psat-total"><strong>—</strong></span><br>
+              <span style="color: var(--text-light);">Note: Path Pal treats this as a superscore using your best section scores.</span>
+            </small>
+          </div>
+        </div>
+
+        <!-- ACT fields -->
+        <div id="act-fields" class="test-section" style="display: none;">
+          <div class="form-row">
+            <div class="form-group">
+              <label>ACT English</label>
+              <input type="number" id="act-english" min="1" max="36" placeholder="e.g., 34">
+            </div>
+            <div class="form-group">
+              <label>ACT Math</label>
+              <input type="number" id="act-math" min="1" max="36" placeholder="e.g., 32">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>ACT Reading</label>
+              <input type="number" id="act-reading" min="1" max="36" placeholder="e.g., 35">
+            </div>
+            <div class="form-group">
+              <label>ACT Science</label>
+              <input type="number" id="act-science" min="1" max="36" placeholder="e.g., 33">
+              <small style="display:block; margin-top:0.25rem; color: var(--text-light);">(optional)</small>
+            </div>
+          </div>
         <div class="form-group">
-          <label>PSAT Score</label>
-          <input type="number" id="psat" min="320" max="1520" placeholder="e.g., 1280">
+            <small>
+              ACT Score (1-36): <span id="act-composite"><strong>—</strong></span><br>
+              <span style="color: var(--text-light);">Note: Path Pal treats this as a superscore using your best section scores.</span>
+            </small>
+          </div>
+        </div>
+
+        <!-- AP Courses -->
+        <div class="form-group" style="margin-top: 1.5rem;">
+          <label>AP Courses Taken</label>
+          <select id="ap-count">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+          </select>
+          <small style="display:block; margin-top:0.25rem; color: var(--text-light);">Add up to 9 AP classes and your exam scores.</small>
+        </div>
+
+        <div id="ap-table" style="margin-top: 0.5rem;">
+          <!-- Rows will be rendered here -->
         </div>
       </div>
 
@@ -126,13 +216,14 @@
             <option value="Mathematics">Mathematics</option>
             <option value="Physics">Physics</option>
             <option value="Economics">Economics</option>
+            <option value="Social Sciences">Social Sciences</option>
             <option value="Political Science">Political Science</option>
             <option value="Journalism">Journalism</option>
             <option value="Art">Art</option>
             <option value="Music">Music</option>
             <option value="Other">Other</option>
           </select>
-          <small>Hold Ctrl/Cmd to select multiple</small>
+          <small>You may select up to 3.</small>
         </div>
         <div id="selected-majors" style="margin-top: 1rem;"></div>
       </div>
@@ -140,26 +231,47 @@
       <!-- Activities & Interests -->
       <div class="card">
         <h3>Activities & Interests</h3>
+
+        <!-- Extracurriculars in Common App-style format -->
         <div class="form-group">
           <label>Extracurricular Activities</label>
-          <textarea id="activities" rows="4" placeholder="List your activities, clubs, sports, volunteer work, etc."></textarea>
+          <select id="activities-count">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+          <small style="display:block; margin-top:0.25rem; color: var(--text-light);">
+            Report up to 10 key activities. Approximate total hours per year for each.
+          </small>
         </div>
 
-        <div class="form-group">
+        <div id="activities-table" style="margin-top: 0.5rem;">
+          <!-- Activity rows rendered here -->
+        </div>
+
+        <div class="form-group" style="margin-top: 1.5rem;">
           <label>Career Goals</label>
-          <textarea id="career-goals" rows="3" placeholder="What are your career aspirations?"></textarea>
+          <textarea id="career-goals" rows="3" maxlength="1000" placeholder="What are your career aspirations?"></textarea>
         </div>
       </div>
 
-      <div style="margin: 2rem 0;">
-        <button class="btn btn-primary" onclick="saveProfile()" style="width: 100%;">Save Profile</button>
+      <div class="save-profile-container" style="margin: 1.5rem 0 -0.25rem 0; position: relative;">
+        <button class="btn-primary" onclick="saveProfile()" style="width: 100%;">Save Profile</button>
       </div>
     </div>
   </main>
 
   <footer>
     <div class="container">
-      <p>&copy; 2025 Path Pal. v1.05</p>
+      <p>&copy; 2025 Path Pal. v1.06</p>
     </div>
   </footer>
 
@@ -175,6 +287,210 @@
       loadProfile();
     });
 
+    function showTestSection(type) {
+      const sections = ['sat', 'psat', 'act'];
+      sections.forEach(t => {
+        const el = document.getElementById(`${t}-fields`);
+        if (el) {
+          el.style.display = (t.toUpperCase() === type) ? 'block' : 'none';
+        }
+      });
+    }
+
+    function clampScore(id, min, max) {
+      const el = document.getElementById(id);
+      if (!el) return null;
+      let val = parseInt(el.value, 10);
+      if (isNaN(val)) {
+        el.value = '';
+        return null;
+      }
+      if (val < min) val = min;
+      if (val > max) val = max;
+      el.value = val;
+      return val;
+    }
+
+    function parseScore(id) {
+      const el = document.getElementById(id);
+      if (!el) return null;
+      const val = parseInt(el.value, 10);
+      return isNaN(val) ? null : val;
+    }
+
+    function updateSatTotal() {
+      const r = parseScore('sat-reading');
+      const m = parseScore('sat-math');
+      const totalEl = document.getElementById('sat-total');
+      if (!totalEl) return;
+      if (r == null && m == null) {
+        totalEl.textContent = '—';
+        return;
+      }
+      const total = (r || 0) + (m || 0);
+      totalEl.textContent = total || '—';
+    }
+
+    function updatePsatTotal() {
+      const r = parseScore('psat-reading');
+      const m = parseScore('psat-math');
+      const totalEl = document.getElementById('psat-total');
+      if (!totalEl) return;
+      if (r == null && m == null) {
+        totalEl.textContent = '—';
+        return;
+      }
+      const total = (r || 0) + (m || 0);
+      totalEl.textContent = total || '—';
+    }
+
+    function updateActComposite() {
+      const scores = [
+        parseScore('act-english'),
+        parseScore('act-math'),
+        parseScore('act-reading'),
+        parseScore('act-science')
+      ].filter(v => v != null);
+
+      const compEl = document.getElementById('act-composite');
+      if (!compEl) return;
+
+      if (scores.length === 0) {
+        compEl.textContent = '—';
+        return;
+      }
+
+      const sum = scores.reduce((a, b) => a + b, 0);
+      const avg = sum / scores.length;
+      compEl.textContent = Math.round(avg);
+    }
+
+    function renderActivitiesRows(count, existing = []) {
+      const container = document.getElementById('activities-table');
+      if (!container) return;
+
+      const n = Math.max(0, Math.min(10, parseInt(count, 10) || 0));
+      let html = '';
+
+      if (n > 0) {
+        // Header row shown once at the top
+        html += '<div class="form-row" style="display: flex; justify-content: flex-start; align-items: center; margin-bottom: 0.25rem; font-size: 0.8rem; color: var(--text-dark); font-weight: 600;">';
+        html += '<div style="flex: 0 0 80px; max-width: 80px; margin-right: 0.25rem; text-align: center; white-space: nowrap;">Hours / yr</div>';
+        html += '<div style="flex: 1; margin-left: 0.25rem; text-align: center;">Activity</div>';
+        html += '</div>';
+      }
+
+      for (let i = 0; i < n; i++) {
+        const row = existing[i] || {};
+        const hours = row.hours || '';
+        const desc = row.description || '';
+
+        html += '<div class="form-row" style="margin-bottom: 0.05rem; display: flex; align-items: center; justify-content: flex-start;">';
+
+        // Hours per year (left - narrow)
+        html += '<div class="form-group" style="flex: 0 0 80px; max-width: 80px; margin-right: 0.25rem;">';
+        html += `<input type="number" id="activity-hours-${i}" min="0" max="2000" style="width: 100%; text-align: center;" placeholder="#${i + 1}" value="${hours}">`;
+        html += '</div>';
+
+        // Activity description (right - wide)
+        html += '<div class="form-group" style="flex: 1; margin-left: 0.25rem;">';
+        html += `<input type="text" id="activity-desc-${i}" maxlength="160" style="width: 100%;" placeholder="Activity ${i + 1} description" value="${desc}">`;
+        html += '</div>';
+
+        html += '</div>';
+      }
+
+      container.innerHTML = html;
+    }
+
+    function getApCourseOptions() {
+      return [
+      'AP Art History',
+      'AP Biology',
+      'AP Calculus AB',
+      'AP Calculus BC',
+      'AP Chemistry',
+      'AP Chinese Language & Culture',
+      'AP Comparative Government & Politics',
+      'AP Computer Science A',
+      'AP Computer Science Principles',
+      'AP English Language & Composition',
+      'AP English Literature & Composition',
+      'AP Environmental Science',
+      'AP European History',
+      'AP French Language & Culture',
+      'AP German Language & Culture',
+      'AP Human Geography',
+      'AP Italian Language & Culture',
+      'AP Japanese Language & Culture',
+      'AP Latin',
+      'AP Macroeconomics',
+      'AP Microeconomics',
+      'AP Music Theory',
+      'AP Physics 1',
+      'AP Physics 2',
+      'AP Physics C: Electricity & Magnetism',
+      'AP Physics C: Mechanics',
+      'AP Precalculus',
+      'AP Psychology',
+      'AP Research',
+      'AP Seminar',
+      'AP Spanish Language & Culture',
+      'AP Spanish Literature & Culture',
+      'AP Statistics',
+      'AP Studio Art: 2-D Design',
+      'AP Studio Art: 3-D Design',
+      'AP Studio Art: Drawing',
+      'AP US Government & Politics',
+      'AP US History',
+      'AP World History: Modern',
+      'Other AP'
+    ];
+
+    }
+
+    function renderApRows(count, existing = []) {
+      const container = document.getElementById('ap-table');
+      if (!container) return;
+
+      const n = Math.max(0, Math.min(9, parseInt(count, 10) || 0));
+      const options = getApCourseOptions();
+
+      let html = '';
+      for (let i = 0; i < n; i++) {
+        const existingRow = existing[i] || {};
+        const selectedCourse = existingRow.course || '';
+        const selectedScore = existingRow.score || '';
+
+        html += '<div class="form-row" style="margin-bottom: 0.5rem;">';
+        // Course select
+        html += '<div class="form-group" style="flex: 2; margin-right: 0.5rem;">';
+        html += `<label style="font-size: 0.8rem; display:block; text-align:center;">AP Course ${i + 1}</label>`;
+        html += `<select id="ap-course-${i}" style="width: 100%;">`;
+        html += '<option value="">Select course</option>';
+        options.forEach(opt => {
+          const sel = opt === selectedCourse ? ' selected' : '';
+          html += `<option value="${opt}"${sel}>${opt}</option>`;
+        });
+        html += '</select></div>';
+
+        // Score select
+        html += '<div class="form-group" style="flex: 1; margin-left: 0.5rem;">';
+        html += `<label style="font-size: 0.8rem; display:block; text-align:center;">Score</label>`;
+        html += `<select id="ap-score-${i}" style="width: 100%;">`;
+        html += '<option value="">–</option>';
+        for (let s = 1; s <= 5; s++) {
+          const sel = String(s) === String(selectedScore) ? ' selected' : '';
+          html += `<option value="${s}"${sel}>${s}</option>`;
+        }
+        html += '</select></div>';
+
+        html += '</div>';
+      }
+
+      container.innerHTML = html;
+    }
+
     async function loadProfile() {
       try {
         const profile = await UserProfile.get();
@@ -183,18 +499,68 @@
         document.getElementById('grade').value = profile.grade || '';
         document.getElementById('gpa').value = profile.gpa || '';
         document.getElementById('weighted').checked = profile.weighted !== false;
-        document.getElementById('sat').value = profile.sat || '';
-        document.getElementById('act').value = profile.act || '';
-        document.getElementById('psat').value = profile.psat || '';
-        document.getElementById('activities').value = profile.activities || '';
         document.getElementById('career-goals').value = profile.careerGoals || '';
         
-        // Load selected majors
+        // Initialize test section - default to SAT if any SAT score exists, otherwise ACT, then PSAT
+        const testTypeSelect = document.getElementById('test-type');
+        let initialType = '';
+        if (testTypeSelect) {
+          if (profile.sat) initialType = 'SAT';
+          else if (profile.act) initialType = 'ACT';
+          else if (profile.psat) initialType = 'PSAT';
+
+          testTypeSelect.value = initialType;
+          showTestSection(initialType);
+        }
+
+        // If we have total scores from an earlier version, show them in the summary fields
+        if (profile.sat && document.getElementById('sat-total')) {
+          document.getElementById('sat-total').textContent = profile.sat;
+        }
+        if (profile.psat && document.getElementById('psat-total')) {
+          document.getElementById('psat-total').textContent = profile.psat;
+        }
+        if (profile.act && document.getElementById('act-composite')) {
+          document.getElementById('act-composite').textContent = profile.act;
+        }
+
+        // Initialize AP courses
+        const apCountSelect = document.getElementById('ap-count');
+        const apCourses = profile.apCourses || [];
+        if (apCountSelect) {
+          apCountSelect.value = Math.min(apCourses.length || 0, 9);
+          renderApRows(apCountSelect.value, apCourses);
+        }
+
+        // Initialize activities from stored string (best-effort parse)
+        const activitiesCountSelectInit = document.getElementById('activities-count');
+        const activitiesRaw = profile.activities || '';
+        let activities = [];
+        if (activitiesRaw) {
+          const lines = activitiesRaw.split('\n').map(l => l.trim()).filter(Boolean);
+          activities = lines.slice(0, 10).map(line => {
+            // Try to parse "X hrs — description" or "X hours: description"
+            const match = line.match(/^(\d+)\s*(hrs?|hours?|h)?\s*[-–:]\s*(.+)$/i);
+            if (match) {
+              return { hours: match[1], description: match[3] };
+            }
+            return { hours: '', description: line };
+          });
+        }
+        if (activitiesCountSelectInit) {
+          activitiesCountSelectInit.value = activities.length;
+          renderActivitiesRows(activities.length, activities);
+        }
+        
+        // Load selected majors (respect max 3)
         if (profile.majors && profile.majors.length > 0) {
           const majorsSelect = document.getElementById('majors');
+          const limitedMajors = profile.majors.slice(0, 3);
           Array.from(majorsSelect.options).forEach(option => {
-            if (profile.majors.includes(option.value)) {
+            if (limitedMajors.includes(option.value)) {
               option.selected = true;
+            } else {
+              option.selected = false;
             }
           });
         }
@@ -203,8 +569,86 @@
         updateSelectedMajors();
         
         // Listen for changes
-        document.getElementById('majors').addEventListener('change', updateSelectedMajors);
+        const majorsSelect = document.getElementById('majors');
+        majorsSelect.addEventListener('change', (e) => {
+          const selectedOptions = Array.from(majorsSelect.selectedOptions);
+          if (selectedOptions.length > 3) {
+            // Deselect the last changed option
+            const last = e.target.options[e.target.selectedIndex];
+            if (last && last.selected) {
+              last.selected = false;
+            }
+          }
+          updateSelectedMajors();
+        });
         document.getElementById('name').addEventListener('input', updateProfileName);
+        document.getElementById('grade').addEventListener('change', updateProfileName);
+
+        // AP count change
+        const apCountSelectChange = document.getElementById('ap-count');
+        if (apCountSelectChange) {
+          apCountSelectChange.addEventListener('change', (e) => {
+            const count = parseInt(e.target.value, 10) || 0;
+            renderApRows(count);
+          });
+        }
+
+        // Activities count change
+        const activitiesCountSelect = document.getElementById('activities-count');
+        if (activitiesCountSelect) {
+          activitiesCountSelect.addEventListener('change', (e) => {
+            const count = parseInt(e.target.value, 10) || 0;
+            renderActivitiesRows(count);
+          });
+        }
+
+        // Test field listeners
+        const testType = document.getElementById('test-type');
+        if (testType) {
+          testType.addEventListener('change', (e) => {
+            const type = e.target.value || '';
+            showTestSection(type);
+          });
+        }
+
+        ['sat-reading', 'sat-math'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) {
+            // While typing, allow 1–800 but cap anything above 800
+            el.addEventListener('input', () => {
+              const val = parseInt(el.value, 10);
+              if (!isNaN(val) && val > 800) {
+                el.value = 800;
+              }
+              updateSatTotal();
+            });
+            // On blur, round anything below 200 up to 200 (and still cap at 800)
+            el.addEventListener('blur', () => {
+              const val = parseInt(el.value, 10);
+              if (isNaN(val)) {
+                el.value = '';
+              } else {
+                if (val < 200) el.value = 200;
+                if (val > 800) el.value = 800;
+              }
+              updateSatTotal();
+            });
+          }
+        });
+        ['psat-reading', 'psat-math'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.addEventListener('input', () => {
+            clampScore(id, 160, 760);
+            updatePsatTotal();
+          });
+        });
+        ['act-english', 'act-math', 'act-reading', 'act-science'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.addEventListener('input', () => {
+            clampScore(id, 1, 36);
+            updateActComposite();
+          });
+        });
       } catch (error) {
         console.error('Error loading profile:', error);
         showNotification('Error loading profile. Using default values.', 'warning');
@@ -213,7 +657,9 @@
 
     function updateProfileName() {
       const name = document.getElementById('name').value || 'Student Name';
-      document.getElementById('profile-name').textContent = name;
+      const gradeValue = document.getElementById('grade').value || '';
+      const gradeDisplay = gradeValue ? ` (${gradeValue})` : '';
+      document.getElementById('profile-name').textContent = name + gradeDisplay;
     }
 
     function updateSelectedMajors() {
@@ -230,16 +676,77 @@
 
     async function saveProfile() {
       try {
+        // Compute test totals based on current selection
+        const testType = document.getElementById('test-type') ? document.getElementById('test-type').value : '';
+        let satTotal = '';
+        let actComposite = '';
+        let psatTotal = '';
+
+        if (testType === 'SAT') {
+          const r = parseScore('sat-reading');
+          const m = parseScore('sat-math');
+          if (r != null || m != null) {
+            satTotal = (r || 0) + (m || 0);
+          }
+        } else if (testType === 'PSAT') {
+          const r = parseScore('psat-reading');
+          const m = parseScore('psat-math');
+          if (r != null || m != null) {
+            psatTotal = (r || 0) + (m || 0);
+          }
+        } else if (testType === 'ACT') {
+          const scores = [
+            parseScore('act-english'),
+            parseScore('act-math'),
+            parseScore('act-reading'),
+            parseScore('act-science')
+          ].filter(v => v != null);
+          if (scores.length > 0) {
+            const sum = scores.reduce((a, b) => a + b, 0);
+            const avg = sum / scores.length;
+            actComposite = Math.round(avg);
+          }
+        }
+
+        // Collect AP courses
+        const apCourses = [];
+        const apCountVal = document.getElementById('ap-count') ? parseInt(document.getElementById('ap-count').value, 10) || 0 : 0;
+        for (let i = 0; i < apCountVal && i < 9; i++) {
+          const courseEl = document.getElementById(`ap-course-${i}`);
+          const scoreEl = document.getElementById(`ap-score-${i}`);
+          const course = courseEl ? courseEl.value : '';
+          const score = scoreEl ? scoreEl.value : '';
+          if (course) {
+            apCourses.push({ course, score });
+          }
+        }
+
+        // Collect activities into a Common App-style string
+        const activitiesArr = [];
+        const activitiesCountVal = document.getElementById('activities-count') ? parseInt(document.getElementById('activities-count').value, 10) || 0 : 0;
+        for (let i = 0; i < activitiesCountVal && i < 10; i++) {
+          const hoursEl = document.getElementById(`activity-hours-${i}`);
+          const descEl = document.getElementById(`activity-desc-${i}`);
+          const hours = hoursEl ? (hoursEl.value || '').trim() : '';
+          const desc = descEl ? (descEl.value || '').trim() : '';
+          if (desc) {
+            const prefix = hours ? `${hours} hrs — ` : '';
+            activitiesArr.push(prefix + desc);
+          }
+        }
+        const activitiesText = activitiesArr.join('\n');
+
         const profile = {
           name: document.getElementById('name').value,
           grade: document.getElementById('grade').value,
           gpa: document.getElementById('gpa').value,
           weighted: document.getElementById('weighted').checked,
-          sat: document.getElementById('sat').value,
-          act: document.getElementById('act').value,
-          psat: document.getElementById('psat').value,
+          sat: satTotal || '',
+          act: actComposite || '',
+          psat: psatTotal || '',
           majors: Array.from(document.getElementById('majors').selectedOptions).map(o => o.value),
-          activities: document.getElementById('activities').value,
+          apCourses: apCourses,
+          activities: activitiesText,
           careerGoals: document.getElementById('career-goals').value
         };
         

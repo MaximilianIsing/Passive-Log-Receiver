@@ -109,17 +109,41 @@ function debounce(func, wait) {
   };
 }
 
-// Show notification
+// Show notification (subtle toast that doesn't shift layout)
 function showNotification(message, type = 'info') {
-  const notification = document.createElement('div');
-  notification.className = `notification notification-${type}`;
-  notification.textContent = message;
+  // If we're on a page with a local toast area (e.g., profile save),
+  // prefer anchoring the toast to that container so it appears near the action.
+  const localHost = document.querySelector('.save-profile-container');
+  let container;
+
+  if (localHost) {
+    container = localHost.querySelector('.toast-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.className = 'toast-container';
+      localHost.appendChild(container);
+    }
+  } else {
+    // Fallback: global fixed container at bottom of viewport
+    container = document.querySelector('.toast-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.className = 'toast-container';
+      document.body.appendChild(container);
+    }
+  }
+
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  toast.textContent = message;
+
+  container.appendChild(toast);
   
-  document.body.appendChild(notification);
-  
+  // Auto-dismiss
   setTimeout(() => {
-    notification.style.opacity = '0';
-    setTimeout(() => notification.remove(), 300);
-  }, 3000);
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(4px)';
+    setTimeout(() => toast.remove(), 250);
+  }, 2400);
 }
 

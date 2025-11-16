@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const fs = require('fs');
+const { rateStudent } = require('./rate-student');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -270,7 +271,7 @@ if (!fs.existsSync(storageDir)) {
 
 // Initialize accounts CSV if it doesn't exist
 if (!fs.existsSync(ACCOUNTS_CSV_PATH)) {
-  const header = 'user_id,name,grade,gpa,weighted,sat,act,psat,majors,activities,interests,career_goals,created_at,updated_at\n';
+  const header = 'user_id,name,grade,gpa,weighted,sat,act,psat,majors,ap_courses,activities,interests,career_goals,rating,created_at,updated_at\n';
   fs.writeFileSync(ACCOUNTS_CSV_PATH, header, 'utf8');
 }
 
@@ -354,10 +355,18 @@ function readAccounts() {
         }
         
         try {
+          account.ap_courses = account.ap_courses ? JSON.parse(account.ap_courses) : [];
+        } catch (e) {
+          account.ap_courses = [];
+        }
+        
+        try {
           account.interests = account.interests ? JSON.parse(account.interests) : [];
         } catch (e) {
           account.interests = [];
         }
+        
+        // rating is stored as plain scalar; no special parsing needed
         
         accounts.push(account);
       }
@@ -373,7 +382,7 @@ function readAccounts() {
 // Write accounts to CSV
 function writeAccounts(accounts) {
   try {
-    const headers = ['user_id', 'name', 'grade', 'gpa', 'weighted', 'sat', 'act', 'psat', 'majors', 'activities', 'interests', 'career_goals', 'created_at', 'updated_at'];
+    const headers = ['user_id', 'name', 'grade', 'gpa', 'weighted', 'sat', 'act', 'psat', 'majors', 'ap_courses', 'activities', 'interests', 'career_goals', 'rating', 'created_at', 'updated_at'];
     
     let csv = headers.join(',') + '\n';
     
@@ -382,7 +391,7 @@ function writeAccounts(accounts) {
         let value = account[header] || '';
         
         // Handle arrays and objects
-        if (header === 'majors' || header === 'interests') {
+        if (header === 'majors' || header === 'interests' || header === 'ap_courses') {
           value = Array.isArray(value) ? JSON.stringify(value) : (value || '[]');
         }
         
@@ -476,6 +485,7 @@ app.get('/api/profile', (req, res) => {
         act: '',
         psat: '',
         majors: [],
+        apCourses: [],
         activities: '',
         interests: [],
         careerGoals: ''
@@ -493,6 +503,7 @@ app.get('/api/profile', (req, res) => {
       act: account.act || '',
       psat: account.psat || '',
       majors: account.majors || [],
+      apCourses: account.ap_courses || [],
       activities: account.activities || '',
       interests: account.interests || [],
       careerGoals: account.career_goals || ''
@@ -504,12 +515,28 @@ app.get('/api/profile', (req, res) => {
 });
 
 // Profile API endpoint - POST (create/update)
-app.post('/api/profile', (req, res) => {
+app.post('/api/profile', async (req, res) => {
   try {
     const profileData = req.body;
     
     if (!profileData.user_id) {
       return res.status(400).json({ error: 'user_id is required' });
+    }
+
+    // Compute a private rating for this student (not returned to client)
+    let rating = '';
+    try {
+      rating = await rateStudent({
+        gpa: profileData.gpa,
+        weighted: profileData.weighted,
+        sat: profileData.sat,
+        act: profileData.act,
+        apCourses: profileData.apCourses || [],
+        activities: profileData.activities || ''
+      });
+    } catch (e) {
+      console.error('Error rating student profile:', e);
+      rating = '';
     }
     
     // Transform frontend format to backend format
@@ -523,9 +550,11 @@ app.post('/api/profile', (req, res) => {
       act: profileData.act || '',
       psat: profileData.psat || '',
       majors: profileData.majors || [],
+      ap_courses: profileData.apCourses || [],
       activities: profileData.activities || '',
       interests: profileData.interests || [],
-      career_goals: profileData.careerGoals || profileData.career_goals || ''
+      career_goals: profileData.careerGoals || profileData.career_goals || '',
+      rating: rating
     };
     
     const success = saveAccount(accountData);

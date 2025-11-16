@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="description" content="v1.05">
+  <meta name="description" content="v1.06">
   <title>Path Pal - Home</title>
   <link rel="manifest" href="/manifest.json">
   <link rel="icon" type="image/png" href="/media/AppIcon.png">
@@ -23,7 +23,7 @@
         <h1>Path Pal</h1>
       </div>
       <h2>Mobile App Required</h2>
-      <p>Path Pal is designed for mobile devices. Please open this site on your mobile phone or tablet to get started.</p>
+    <p>Path Pal is designed for mobile devices. Please open this site on your mobile phone or tablet to get started.</p>
       <div class="desktop-message-actions">
         <p class="desktop-instructions">To access Path Pal:</p>
         <ol class="desktop-steps">
@@ -37,7 +37,7 @@
     </div>
     <div class="desktop-footer-bar">
       <span class="desktop-footer-left">© Path Pal 2025</span>
-      <span class="desktop-footer-right">v1.05</span>
+      <span class="desktop-footer-right">v1.06</span>
     </div>
   </div>
 
@@ -63,8 +63,10 @@
   <header>
     <div class="header-content container">
       <div class="logo">
-        <img src="/media/logo/logo64x64.png" alt="Path Pal Logo">
-        <h1>Path Pal</h1>
+        <a href="/index.html" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: inherit;">
+          <img src="/media/logo/logo64x64.png" alt="Path Pal Logo">
+          <h1>Path Pal</h1>
+        </a>
       </div>
       <button class="menu-toggle" aria-label="Toggle menu"><img src="/media/icons/Hamburger128x128.png" alt="Menu" style="width: 24px; height: 24px;"></button>
     </div>
@@ -73,16 +75,16 @@
   <!-- Navigation -->
   <nav>
     <ul>
-      <li><a href="/index.html" class="active">Home</a></li>
-      <li><a href="/profile.html">My Profile</a></li>
-      <li><a href="/odds.html">Admissions Odds</a></li>
-      <li><a href="/simulator.html">"What If" Simulator</a></li>
-      <li><a href="/explorer.html">College Explorer</a></li>
-      <li><a href="/career.html">Career & Salary Paths</a></li>
-      <li><a href="/activities.html">Activity & Internship Recs</a></li>
-      <li><a href="/planner.html">4-Year Planner</a></li>
-      <li><a href="/messages.html">Messages</a></li>
-      <li><a href="/saved.html">Saved Colleges</a></li>
+      <li><a href="/index.html" class="active"><img src="/media/icons/Home256x256.png" alt="Home" class="nav-icon"> Home</a></li>
+      <li><a href="/profile.html"><img src="/media/icons/Profile256x256.png" alt="Profile" class="nav-icon"> My Profile</a></li>
+      <li><a href="/odds.html"><img src="/media/icons/Odds256x256.png" alt="Admissions Odds" class="nav-icon"> Admissions Odds</a></li>
+      <li><a href="/simulator.html"><img src="/media/icons/Book256x256.png" alt="What If" class="nav-icon"> "What If" Simulator</a></li>
+      <li><a href="/explorer.html"><img src="/media/icons/Search256x256.png" alt="College Explorer" class="nav-icon"> College Explorer</a></li>
+      <li><a href="/career.html"><img src="/media/icons/DollarSign256x256.png" alt="Career & Salary Paths" class="nav-icon"> Career & Salary Paths</a></li>
+      <li><a href="/activities.html"><img src="/media/icons/Activity256x256.png" alt="Activities" class="nav-icon"> Activity & Internship Recs</a></li>
+      <li><a href="/planner.html"><img src="/media/icons/Calender256x256.png" alt="4-Year Planner" class="nav-icon"> 4-Year Planner</a></li>
+      <li><a href="/messages.html"><img src="/media/icons/Chat256x256.png" alt="AI Counselor" class="nav-icon"> AI Counselor</a></li>
+      <li><a href="/saved.html"><img src="/media/icons/Star256x256.png" alt="Saved Colleges" class="nav-icon"> Saved Colleges</a></li>
     </ul>
   </nav>
 
@@ -92,8 +94,7 @@
       <!-- Welcome Banner -->
       <section class="welcome-banner">
         <h2>Welcome to Path Pal!</h2>
-        <p>v1.05</p>
-        <button class="btn-primary" onclick="window.location.href='/profile.html'">Start Your Journey</button>
+        <button class="btn-hero" onclick="window.location.href='/profile.html'">Start Your Journey</button>
       </section>
 
       <!-- Progress Snapshot -->
@@ -106,6 +107,8 @@
         <div class="progress-bar">
           <div class="progress-fill" id="profile-progress" style="width: 0%"></div>
         </div>
+        <!-- Divider above Upcoming Deadlines -->
+        <div style="border-bottom: 1px solid var(--border-color); margin: 0.75rem 0 0.25rem 0;"></div>
         <div class="progress-item">
           <span>Upcoming Deadlines</span>
           <span id="deadline-count">0</span>
@@ -126,7 +129,7 @@
         <a href="/explorer.html" class="tile">
           <div class="tile-icon"><img src="/media/icons/Search256x256.png" alt="Search"></div>
           <h3>Explore Colleges</h3>
-          <p>Find perfect fit</p>
+          <p>Find your perfect fit</p>
         </a>
         <a href="/planner.html" class="tile">
           <div class="tile-icon"><img src="/media/icons/Calender256x256.png" alt="Calendar"></div>
@@ -144,27 +147,19 @@
           <p>View & update info</p>
         </a>
         <a href="/saved.html" class="tile">
-          <div class="tile-icon"><img src="/media/icons/Star128x128.png" alt="Star"></div>
+          <div class="tile-icon"><img src="/media/icons/Star256x256.png" alt="Star"></div>
           <h3>Saved Colleges</h3>
-          <p>Track favorites</p>
+          <p>Track favorite Colleges</p>
         </a>
       </section>
 
-      <!-- Notifications -->
-      <section class="notifications">
-        <div class="notification">
-          <h4>New Recommendations Available</h4>
-          <p>Check out personalized activity suggestions based on your profile.</p>
-          <a href="/activities.html" style="color: var(--primary-green);">View Now →</a>
-        </div>
-      </section>
     </div>
   </main>
 
   <!-- Footer -->
   <footer>
     <div class="container">
-      <p>&copy; 2025 Path Pal. v1.05</p>
+      <p>&copy; Path Pal 2025 — v1.06</p>
     </div>
   </footer>
 
@@ -193,7 +188,7 @@
               const isAndroid = /Android/.test(navigator.userAgent);
               
               if (isIOS) {
-                instructions.innerHTML = 'Path Pal works best as a mobile app, add it to your home screen in 3 simple steps:<br><br>1. Tap the Share button (square with arrow pointing up) on your screen<br>2. Tap the "More" button<br>3. Tap the "Add to Home Screen" button on the bottom<br><br>You\'ll now have quick access to Path Pal from your home screen!';
+                instructions.innerHTML = 'Path Pal works best as a mobile app, add it to your home screen in 3 simple steps:<br><br>1. Tap the "Share" button (square with arrow pointing up) on your screen<br>2. Tap the "More" button<br>3. Tap the "Add to Home Screen" button on the bottom<br><br>You\'ll now have quick access to Path Pal from your home screen!';
                 guideImage.src = '/media/Guide.png';
                 guideImage.alt = 'iOS Add to Home Screen Guide';
               } else if (isAndroid) {
@@ -232,18 +227,41 @@
         const profile = await UserProfile.get();
         const savedColleges = SavedColleges.get();
         
-        // Calculate profile completion
-        let completion = 0;
-        if (profile.name) completion += 15;
-        if (profile.grade) completion += 10;
-        if (profile.gpa) completion += 15;
-        if (profile.sat || profile.act) completion += 15;
-        if (profile.majors && profile.majors.length > 0) completion += 15;
-        if (profile.activities && profile.activities.length > 0) completion += 15;
-        if (profile.careerGoals) completion += 15;
+          // Calculate profile completion (0–100)
+          let completion = 0;
+          if (profile.name) completion += 10;
+          if (profile.grade) completion += 10;
+          if (profile.gpa) completion += 15;
+          if (profile.sat || profile.act) completion += 15;
+          if (profile.majors && profile.majors.length > 0) completion += 15;
+          if (profile.apCourses && profile.apCourses.length > 0) completion += 10;
+          if (profile.activities && profile.activities.length > 0) completion += 10;
+          if (profile.careerGoals) completion += 15;
+
+          if (completion > 100) completion = 100;
         
-        document.getElementById('profile-completion').textContent = completion + '%';
-        document.getElementById('profile-progress').style.width = completion + '%';
+        const completionEl = document.getElementById('profile-completion');
+        const progressEl = document.getElementById('profile-progress');
+        const progressBarEl = document.querySelector('.progress-snapshot .progress-bar');
+        if (completionEl) {
+          completionEl.textContent = completion + '%';
+        }
+        if (progressEl) {
+          // Force width update so the green fill actually reflects completion
+          progressEl.style.setProperty('width', completion + '%', 'important');
+          // Ensure the fill color is the primary green, even if CSS variables fail
+          progressEl.style.backgroundColor = getComputedStyle(document.documentElement)
+            .getPropertyValue('--primary-green') || '#0d8c79';
+        }
+
+        if (progressBarEl) {
+          // As a backup, also tint the outer bar using a gradient so progress is always visible
+          const green = getComputedStyle(document.documentElement)
+            .getPropertyValue('--primary-green') || '#0d8c79';
+          const gray = getComputedStyle(document.documentElement)
+            .getPropertyValue('--border-color') || '#d0d7de';
+          progressBarEl.style.background = `linear-gradient(to right, ${green} 0%, ${green} ${completion}%, ${gray} ${completion}%, ${gray} 100%)`;
+        }
         document.getElementById('saved-count').textContent = savedColleges.length;
       } catch (error) {
         console.error('Error loading profile:', error);

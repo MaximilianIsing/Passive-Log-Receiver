@@ -1,4 +1,4 @@
-const CACHE_NAME = 'path-pal-v1';
+const CACHE_NAME = 'path-pal-v1.06';
 const urlsToCache = [
   '/',
   '/index.html',
