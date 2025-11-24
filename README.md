@@ -1,6 +1,6 @@
 # Path Pal
 
-**v1.09.2**
+**v1.09.03**
 
 Path Pal is a Progressive Web App (PWA) that helps students plan their college journey with personalized recommendations, admission odds calculations, and AI-powered guidance.
 

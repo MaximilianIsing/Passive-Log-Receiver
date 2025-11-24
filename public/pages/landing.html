@@ -33,6 +33,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 1rem 1.5rem;
+      padding-bottom: max(2rem, env(safe-area-inset-bottom));
       max-width: 100%;
       box-sizing: border-box;
       height: 100vh;
@@ -48,8 +49,9 @@
       position: relative;
       overflow: hidden;
       touch-action: pan-y pinch-zoom;
-      flex: 1;
+      flex: 1 1 auto;
       min-height: 0;
+      max-height: 60vh;
       display: flex;
       flex-direction: column;
     }
@@ -120,8 +122,9 @@
       width: 100%;
       max-width: 400px;
       margin-top: 1.5rem;
-      margin-bottom: 2rem;
+      margin-bottom: 0;
       flex-shrink: 0;
+      padding-bottom: env(safe-area-inset-bottom);
     }
 
     .landing-heading {
@@ -189,6 +192,7 @@
       .landing-heading {
         font-size: 2rem;
         margin-top: 0.75rem;
+        margin-bottom: 1.5rem;
       }
       
       .landing-heading .logo {
@@ -201,6 +205,18 @@
       
       .carousel-dots {
         margin-top: 1rem;
+      }
+      
+      .landing-content {
+        margin-top: 1rem;
+      }
+      
+      .carousel-container {
+        max-height: 50vh;
+      }
+      
+      .landing-container {
+        padding-bottom: max(1rem, env(safe-area-inset-bottom));
       }
     }
   </style>
