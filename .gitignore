@@ -1,52 +1,34 @@
-# Dependencies
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
 
-# Environment variables
-.env
-.env.local
-.env.production
-gpt-key.txt
-email-key.txt
+# Scraper runtime files
+scraper_progress.json
+slug_cache.json
+scraper.log
+slug_misses.log
+scanned.csv.tmp
 
-# Logs
-*.log
-logs/
+# API keys
+endpointkey.txt
 
-# OS files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
+# Environment
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
 *.swp
 *.swo
 *~
 
-# IDE files
-.vscode/
-.idea/
-*.sublime-project
-*.sublime-workspace
-
-# Build files
-dist/
-build/
-*.pid
-*.seed
-*.pid.lock
-
-# Coverage
-coverage/
-.nyc_output/
-
-# Render
-.render/
-
-# Storage (user data - accounts, etc.)
-storage/
+# OS
+.DS_Store
+Thumbs.db
 

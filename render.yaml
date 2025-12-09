@@ -1,15 +1,9 @@
 services:
-  - type: web
-    name: path-pal
-    env: node
-    region: oregon
-    plan: free
-    buildCommand: npm install
-    startCommand: npm start
+  - type: worker
+    name: college-scraper
+    env: python
+    buildCommand: pip install -r requirements.txt && playwright install chromium
+    startCommand: python server.py
     envVars:
-      - key: NODE_ENV
-        value: production
-      - key: GPT_API_KEY
-        sync: false
-        # Set this in Render dashboard: Settings > Environment Variables
-
+      - key: PYTHON_VERSION
+        value: 3.11.0
