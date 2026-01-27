@@ -1,34 +1,44 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
 
-# Scraper runtime files
-scraper_progress.json
-slug_cache.json
-scraper.log
-slug_misses.log
-scanned.csv.tmp
+# Sensitive data and keys
+receivekey.txt
+accesskey.txt
+public-key.txt
 
-# API keys
-endpointkey.txt
+# User data directory
+data/
 
-# Environment
-venv/
-env/
-ENV/
-.venv
+# Environment variables
+.env
+.env.local
+.env.*.local
 
-# IDE
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE files
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# OS
-.DS_Store
-Thumbs.db
+# Temporary files
+tmp/
+temp/
+*.tmp
 
+# Build files
+dist/
+build/
