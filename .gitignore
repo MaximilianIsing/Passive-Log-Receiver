@@ -8,6 +8,7 @@ package-lock.json
 # Sensitive data and keys
 receivekey.txt
 accesskey.txt
+private-key.txt
 public-key.txt
 
 # User data directory
