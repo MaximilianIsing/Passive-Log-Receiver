@@ -253,11 +253,11 @@ app.get('/api/user/:email/file/:fileName', (req, res) => {
     }
     
     const content = fs.readFileSync(filePath, 'utf8');
-    const isEncrypted = fileName !== 'logs.txt';
+    const isEncrypted = fileName !== 'logs.txt'; // Logs are plain text, others are encrypted
     
     res.json({
       fileName,
-      content: isEncrypted ? content : content,
+      content: content,
       encrypted: isEncrypted,
       size: fs.statSync(filePath).size
     });
@@ -338,6 +338,8 @@ app.post('/api', (req, res) => {
       }
       
       logEntry += '---\n\n';
+      
+      // Append log entry as plain text (not encrypted)
       fs.appendFileSync(logsPath, logEntry, 'utf8');
       console.log(`  Appended to: logs.txt`);
       
