@@ -122,6 +122,22 @@ app.use((req, res, next) => {
   next();
 });
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+  const memUsage = process.memoryUsage();
+  res.json({
+    status: 'healthy',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    memory: {
+      used: Math.round(memUsage.heapUsed / 1024 / 1024) + ' MB',
+      total: Math.round(memUsage.heapTotal / 1024 / 1024) + ' MB',
+      rss: Math.round(memUsage.rss / 1024 / 1024) + ' MB'
+    },
+    version: require('./package.json').version
+  });
+});
+
 // Frontend route - serve dashboard with access key validation
 app.get('/', (req, res) => {
   const key = req.query.key;
