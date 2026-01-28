@@ -84,6 +84,10 @@ if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
 }
 
+// Store termination state per user
+// Format: { email: { shouldTerminate: boolean, confirmed: boolean } }
+const terminationState = {};
+
 // Function to ensure user email folder exists
 function ensureUserFolder(email) {
   const userFolder = path.join(DATA_DIR, email);
@@ -102,7 +106,7 @@ app.use(express.json({ limit: '80mb' }));
 // CORS middleware - IMPORTANT for extension requests
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   
   // Handle preflight requests
@@ -265,6 +269,158 @@ app.get('/api/user/:email/file/:fileName', (req, res) => {
     console.error('Error reading file:', error);
     res.status(500).json({ error: 'Failed to read file' });
   }
+});
+
+// API endpoint to delete a user and all their data
+app.delete('/api/user/:email', (req, res) => {
+  const key = req.query.key;
+  const email = decodeURIComponent(req.params.email);
+  
+  if (key !== ACCESS_KEY) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  
+  try {
+    const userFolder = path.join(DATA_DIR, email);
+    
+    if (!fs.existsSync(userFolder)) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    // Delete the entire user folder and all its contents
+    fs.rmSync(userFolder, { recursive: true, force: true });
+    
+    // Remove termination state for this user
+    if (terminationState[email]) {
+      delete terminationState[email];
+    }
+    
+    console.log(`User deleted: ${email}`);
+    res.json({ success: true, message: `User ${email} and all their data have been deleted` });
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    res.status(500).json({ error: 'Failed to delete user' });
+  }
+});
+
+// API endpoint to check if user should terminate
+app.get('/api/shouldTerminate', (req, res) => {
+  const key = req.query.key;
+  const email = req.query.email;
+  
+  if (key !== API_KEY) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  
+  if (!email) {
+    return res.status(400).json({ error: 'Email parameter is required' });
+  }
+  
+  const decodedEmail = decodeURIComponent(email);
+  const state = terminationState[decodedEmail];
+  const shouldTerminate = state ? state.shouldTerminate : false;
+  
+  res.json({ shouldTerminate });
+});
+
+// API endpoint to set shouldTerminate flag
+app.post('/api/user/:email/terminate', (req, res) => {
+  const key = req.query.key;
+  const email = decodeURIComponent(req.params.email);
+  
+  if (key !== ACCESS_KEY) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  
+  try {
+    if (!terminationState[email]) {
+      terminationState[email] = { shouldTerminate: false, confirmed: false };
+    }
+    
+    terminationState[email].shouldTerminate = true;
+    terminationState[email].confirmed = false;
+    
+    console.log(`Termination requested for user: ${email}`);
+    res.json({ success: true, message: 'Termination flag set' });
+  } catch (error) {
+    console.error('Error setting termination flag:', error);
+    res.status(500).json({ error: 'Failed to set termination flag' });
+  }
+});
+
+// API endpoint to cancel termination
+app.post('/api/user/:email/cancel-terminate', (req, res) => {
+  const key = req.query.key;
+  const email = decodeURIComponent(req.params.email);
+  
+  if (key !== ACCESS_KEY) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  
+  try {
+    if (!terminationState[email]) {
+      terminationState[email] = { shouldTerminate: false, confirmed: false };
+    }
+    
+    terminationState[email].shouldTerminate = false;
+    terminationState[email].confirmed = false;
+    
+    console.log(`Termination cancelled for user: ${email}`);
+    res.json({ success: true, message: 'Termination cancelled' });
+  } catch (error) {
+    console.error('Error cancelling termination:', error);
+    res.status(500).json({ error: 'Failed to cancel termination' });
+  }
+});
+
+// API endpoint to confirm termination
+app.post('/api/confirmTerminate', (req, res) => {
+  const key = req.body.key;
+  const email = req.body.email;
+  
+  if (key !== API_KEY) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  
+  if (!email) {
+    return res.status(400).json({ error: 'Email parameter is required' });
+  }
+  
+  const decodedEmail = decodeURIComponent(email);
+  
+  try {
+    if (!terminationState[decodedEmail]) {
+      terminationState[decodedEmail] = { shouldTerminate: false, confirmed: false };
+    }
+    
+    terminationState[decodedEmail].confirmed = true;
+    
+    console.log(`Termination confirmed for user: ${decodedEmail}`);
+    res.json({ success: true, message: 'Termination confirmed' });
+  } catch (error) {
+    console.error('Error confirming termination:', error);
+    res.status(500).json({ error: 'Failed to confirm termination' });
+  }
+});
+
+// API endpoint to get termination status (for dashboard)
+app.get('/api/user/:email/termination-status', (req, res) => {
+  const key = req.query.key;
+  const email = decodeURIComponent(req.params.email);
+  
+  if (key !== ACCESS_KEY) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  
+  const state = terminationState[email];
+  if (!state) {
+    return res.json({ shouldTerminate: false, confirmed: false });
+  }
+  
+  res.json({
+    shouldTerminate: state.shouldTerminate,
+    confirmed: state.confirmed
+  });
 });
 
 // Endpoint to receive messages
